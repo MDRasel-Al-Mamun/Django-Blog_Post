@@ -1,0 +1,87 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %} BlogProject : Tag - {{ tag.name }} {% endblock %}
+
+{% block extrahead %} {% endblock %}
+
+{% block extrastyle %}
+
+{% endblock %}
+
+{% block header %} {% include 'partials/_header.html' %} {% endblock %}
+
+{% block content %}
+
+<!-- Page Content -->
+<div class="container my-5">
+
+ <div class="row">
+
+  <!-- Blog Entries Column -->
+  <div class="col-md-8">
+
+   <h2 class="my-4">Our <strong>Last News</strong> and Updates</h1>
+
+    <!-- Blog Post -->
+    {% if posts %}
+    {% for post in posts %}
+    <div class="card mb-4">
+     <div class="img-box">
+      <img class="card-img-top" src="{{ post.thumbnail.url }}" height="400" alt="Card image cap">
+     </div>
+     <div class="card-body">
+      <span class="text text-warning text-uppercase">
+       {{ post.category.name }}
+      </span>
+      <a class="text-decoration-none text-dark" href="{{ post.get_absolute_url }}">
+       <h2 class="card-title text-capitalize">{{ post.title }}</h2>
+      </a>
+      <p class="card-text text-justify">{{ post.overview }}</p>
+      <div class="mb-3">
+       {% for tag in post.tags.all %}
+       <a href="{% url 'tagged' tag.slug %}" class="badge badge-primary">{{ tag }}</a>
+       {% endfor %}
+      </div>
+      <a href="{{ post.get_absolute_url }}" class="btn btn-secondary">Read More &rarr;</a>
+     </div>
+     <div class="card-footer text-muted">
+      <div class="">
+       <span class="post-auhor-date">
+        <span>
+         <a href="" class="pr-1">
+          <img src="{{ post.author.userprofile.image.url }}" height="30px" width="30px" class="rounded-circle" alt="">
+         </a>
+        </span>
+        <span href="" class=""> {{ post.publish_date }} </span>
+       </span>
+       <span class="px-1"> | </span>
+       <span class="post-readtime">
+        <i class="fal fa-clock"></i>
+        1 min <span>read</span>
+       </span>
+      </div>
+     </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <h3>No Posts are Published</h3>
+    {% endif %}
+
+  </div>
+
+  <!-- Sidebar Widgets Column -->
+  {% include 'blog/sidebar.html' %}
+
+ </div>
+ <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+{% endblock %}
+
+{% block footer %} {% include 'partials/_footer.html' %} {% endblock %}
+
+{% block extrascripts %}{% endblock %}

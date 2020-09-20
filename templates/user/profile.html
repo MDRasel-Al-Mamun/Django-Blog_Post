@@ -1,0 +1,152 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %} AuthProject : Profile {% endblock %}
+
+{% block extrahead %} {% endblock %}
+
+{% block extrastyle %}
+
+{% endblock %}
+
+{% block header %} {% include 'partials/_header.html' %} {% endblock %}
+
+{% block content %}
+
+{% include 'partials/_messages.html' %}
+
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-3 col-xl-3">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Profile Settings</h5>
+        </div>
+
+        <div class="list-group list-group-flush">
+          <a class="list-group-item text-dark active">
+            Account
+          </a>
+          <a href="{% url 'update' %}" class="list-group-item text-dark">
+            Update Profile
+          </a>
+          <a href="{% url 'change_password' %}" class="list-group-item text-dark">
+            Change Password
+          </a>
+          <a href="{% url 'favourite_list' %}" class="list-group-item text-dark">
+            Save Post
+          </a>
+          <a href="" class="list-group-item text-dark">
+            Save Posts
+          </a>
+          <a href="{% url 'delete_account' %}" class="list-group-item text-dark">
+            Delete account
+          </a>
+          <a href="{% url 'signout' %}" class="list-group-item text-dark">
+            Sign Out
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-9 col-xl-9">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title mb-0">{{ profile.full_name }}</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 col-xl-3 col-xxl-3 text-center">
+              <img src="{{ profile.image.url }}" width="180" height="180" class="rounded-circle mt-2" alt="{{ profile.full_name }}">
+            </div>
+            <div class="col-12 col-sm-12 col-md-7 col-lg-8 col-xl-9 col-xxl-9 pt-4 pl-4">
+              <strong>About me</strong>
+
+              {% if profile.biography %}
+              <p>{{ profile.biography }}</p>
+              {% else %}
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus magnam in nisi ut maxime,consectetur unde quibusdam voluptates culpa natus ipsam voluptate quisquam omnis odit perferendis quos qui asperiores.
+              </p>
+              {% endif %}
+
+            </div>
+          </div>
+          <table class="table my-5">
+            <tbody>
+              <tr>
+                <th>Name</th>
+                <td>{{ profile.full_name }}</td>
+              </tr>
+              <tr>
+                <th>Designation</th>
+                {% if profile.designation %}
+                <td>{{ profile.designation }}</td>
+                {% else %}
+                <td>None</td>
+                {% endif %}
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>{{ profile.user.email }}</td>
+              </tr>
+              <tr>
+                <th>Birthday</th>
+                <td>{{ profile.birthday }}</td>
+              </tr>
+              <tr>
+                <th>Address</th>
+                {% if profile.address %}
+                <td>{{ profile.address }}</td>
+                {% else %}
+                <td>None</td>
+                {% endif %}
+              </tr>
+              <tr>
+                <th>Phone</th>
+                {% if profile.phone %}
+                <td>{{ profile.phone }}</td>
+                {% else %}
+                <td>None</td>
+                {% endif %}
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td><span class="">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="row">
+            <div class="social-icon col-md-8">
+              <a href="{{ profile.website_url }}" class="text-warning mx-2">
+                <i class="fas fa-atlas fa-2x"></i>
+              </a>
+              <a href="{{ profile.facebook_url }}" class="text-primary mx-2">
+                <i class="fab fa-facebook-square fa-2x"></i>
+              </a>
+              <a href="{{ profile.twitter_url }}" class="text-info mx-2">
+                <i class="fab fa-twitter-square fa-2x"></i>
+              </a>
+              <a href="{{ profile.instagram_url }}" class="text-danger mx-2">
+                <i class="fab fa-instagram-square fa-2x"></i>
+              </a>
+              <a href="{{ profile.github_url }}" class="text-dark mx-2">
+                <i class="fab fa-github-square fa-2x"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %} {% include 'partials/_footer.html' %} {% endblock %}
+
+{% block extrascripts %}
+
+
+{% endblock %}

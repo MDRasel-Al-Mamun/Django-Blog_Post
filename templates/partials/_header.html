@@ -1,0 +1,42 @@
+{% load static %}
+
+
+<section class="header-navbar">
+  <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+      <a href="{% url 'home' %}" class="navbar-brand"><img src="{% static 'img/logo.png' %}" alt=""></a>
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+        <div class="navbar-nav">
+          <a href="{% url 'home' %}" class="nav-item nav-link active">Home</a>
+          <a href="#" class="nav-item nav-link">About</a>
+          <a href="{% url 'blog' %}" class="nav-item nav-link">Blog</a>
+
+        </div>
+        <div class="navbar-nav">
+          {% if user.is_authenticated %}
+          <div class="nav-item dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+              <img src="{{ request.user.userprofile.image.url }}" class="rounded-circle" height="40px" width="40px"
+                alt="">
+            </a>
+            <div class="dropdown-menu">
+              <a href="{% url 'profile' %}" class="dropdown-item">Profile</a>
+              <a href="{% url 'update' %}" class="dropdown-item">Edit Profile</a>
+              <a href="{% url 'favourite_list' %}" class="dropdown-item">Save Post</a>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'signout' %}" class="dropdown-item">Logout</a>
+            </div>
+          </div>
+          {% else %}
+          <a href="{% url 'signin' %}" class="nav-item nav-link">Sign In</a>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </nav>
+</section>

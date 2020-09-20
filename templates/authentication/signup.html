@@ -1,0 +1,140 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %} AuthProject : Sign Up {% endblock %}
+
+{% block extrahead %} {% endblock %}
+
+{% block extrastyle %} {% endblock %}
+
+{% block header %} {% include 'partials/_header.html' %} {% endblock %}
+
+{% block content %}
+
+
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-7 mx-auto">
+
+      {% if message %}
+      <div class="text-center mt-5 pt-5">
+        <h1>
+          <span>Congratulations! {{ message }}</span>
+        </h1>
+        <h3 class="pt-3">
+          Your Account Successfully Created
+        </h3>
+        <div class="py-2"></div>
+        <h6>
+          To Active Your Account, A Confirmation Code has Send to Your Email Address
+        </h6>
+        <h3 class="py-2">Please Go to Your Email</h3>
+        <a href="https://mail.google.com/" target="_blank" class="btn btn-info p-3">
+          Email Confiramation
+        </a>
+      </div>
+      {% else %}
+
+      <form class="" id="validation-form" action="{% url 'signup' %}" method="POST">
+
+        <p class="h4 mb-4 text-center ">Sign up</p>
+
+        {% csrf_token %}
+        {% include 'partials/_messages.html' %}
+        <div class="row">
+          <div class="col-md-6">
+            <!-- First name -->
+              <input type="text" id="first_name" name="first_name" class="form-control mt-4" placeholder="First name *" value="{{ values.first_name }}">
+          </div>
+          <div class="col-md-6">
+            <!-- Last name -->
+              <input type="text" id="last_name" name="last_name" class="form-control mt-4" placeholder="Last name *" value="{{ values.last_name }}">
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- Username -->
+          <div class="col-md-12">
+            <input type="text" id="usernameField" name="username" class="form-control mt-4" placeholder="Username *" value="{{ values.username }}">
+
+            <div class="usernameFeedBackArea invalid-feedback" style="display:none"></div>
+          </div>
+
+          <!-- E-mail -->
+          <div class="col-md-12">
+            <input type="email" id="emailField" name="email" class="form-control mt-4" placeholder="E-mail *" value="{{ values.email }}">
+
+            <div class="emailFeedBackArea invalid-feedback" style="display:none"></div>
+          </div>
+
+          <!-- Password -->
+          <div class="col-md-12">
+            <input type="password" id="passwordField" name="password" class="form-control mt-4"
+              placeholder="Password *">
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="col-md-12">
+            <input type="password" id="" name="confirm_password" class="form-control mt-4"
+              placeholder="Confirm Password *">
+          </div>
+
+          <!-- Policy -->
+          <div class="col-md-12">
+            <div class="pt-4">
+              <input type="checkbox" name="agree" id="policy">
+              <label for="policy">
+                Please agree to our policy
+              </label>
+            </div>
+          </div>
+          <!-- Sign up button -->
+         <div class="col-md-12">
+            <button class="btn btn-info my-4 btn-block" name="signup" type="submit">
+              Sign Up
+            </button>
+         </div>
+        </div>
+
+        <!-- Sign In -->
+        <p class="text-center">Already have an account?
+          <a href="{% url 'signin' %}">Sign In</a>
+        </p>
+
+        <!-- Social Sign In -->
+        <p class="text-center">or sign up with:</p>
+
+        <div class="text-center">
+          <a href="" class="text-primary mx-2">
+            <i class="fab fa-facebook-square fa-2x"></i>
+          </a>
+          <a href="#" class="text-secondary mx-2" role="button">
+            <i class="fab fa-linkedin fa-2x"></i>
+          </a>
+          <a href="#" class="text-info mx-2">
+            <i class="fab fa-twitter-square fa-2x"></i>
+          </a>
+          <a href="#" class="text-dark mx-2" role="button">
+            <i class="fab fa-github-square fa-2x"></i>
+          </a>
+        </div>
+
+        <hr>
+
+        <!-- Terms of service -->
+        <p class="text-center">By clicking <em>Sign up</em> you agree to our
+          <a href="" target="_blank">terms of service</a>
+        </p>
+      </form>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %} {% include 'partials/_footer.html' %} {% endblock %}
+
+{% block extrascripts %} {% endblock %}

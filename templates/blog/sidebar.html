@@ -1,0 +1,83 @@
+{% load static %}
+
+{% load post_sidebar %}
+
+<div class="col-md-4 mt-5">
+
+  <!-- Search Widget -->
+  <div class="card my-4">
+    <h5 class="card-header">Search</h5>
+    <div class="card-body">
+      <form action="/blog/search/" method="POST">
+        <div class="input-group">
+          {% csrf_token %}
+          <input type="text" id="query" name="query" class="form-control" placeholder="Search for...">
+          <span class="input-group-append">
+            <button type="submit" class="btn btn-secondary">Go!</button>
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- Categories Widget -->
+  <div class="card my-4">
+    <h5 class="card-header">Categories</h5>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-12">
+          <ul class="categories">
+            {% category_sidebar as categories %}
+            {% for category in categories %}
+            <li class="border-bottom py-1">
+              <a class="text text-dark" href="{% url 'category' category.slug %}">{{ category.name }}
+                <span class="float-right text-muted">({{ category.cat_num }})</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Latest Post -->
+  <div class="card my-4">
+    <h5 class="card-header">Latest Post</h5>
+    <div class="card-body">
+      <ul>
+        {% latest_sidebar as latest_post%}
+        {% for latest in latest_post %}
+        <li class="border-bottom py-2">
+          <div class="sidebar-thumb">
+            <img class="rounded-circle" src="{{ latest.thumbnail.url }}" height="20px" width="20px" alt="" />
+          </div>
+          <div class="sidebar-content">
+            <h5 class=""><a href="{{ latest.get_absolute_url }}">{{ latest.title|truncatewords:6 }}</a></h5>
+          </div>
+          <div class="sidebar-meta">
+            <span class="time"><i class="fal fa-clock pr-1"></i>{{ latest.publish_date }}</span>
+            <span class="comment"><i class="fa fa-comment"></i> 10 </span>
+          </div>
+        </li>
+        {% endfor %}
+
+      </ul>
+    </div>
+  </div>
+
+  <!-- tag -->
+  <div class="card my-4">
+    <h5 class="card-header">Common Tags</h5>
+    <div class="card-body">
+      <div class="row">
+        {% tag_sidebar as common_tags %}
+        {% for common_tag in common_tags %}
+        <div class="col-lg-4">
+          <a href="{% url 'tagged' common_tag.slug %}" class="badge badge-info">{{ common_tag }}</a>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+</div>

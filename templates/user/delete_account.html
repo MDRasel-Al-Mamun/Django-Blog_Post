@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %} AuthProject : Delete Account {% endblock %}
+
+{% block extrahead %} {% endblock %}
+
+{% block extrastyle %} {% endblock %}
+
+{% block header %} {% include 'partials/_header.html' %} {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-7 mx-auto">
+      <div class="text-center mt-5 pt-5">
+        <h1>
+          <span>Delete Account !</span>
+        </h1>
+        <h3 class="pt-3">
+          Are you sure you want to delete your account?
+        </h3>
+        <div class="py-2"></div>
+        <h6>
+          *Important - your account data will remain available for 20 days
+        </h6>
+        <form action="{% url 'delete_account' %}" method="post">
+          {% csrf_token %}
+          <button type="submit" role="button" class="btn btn-danger mt-4">
+            Confirm Delete
+          </button>
+        </form>
+        <p class="pt-4">Not sure to dalete your account?
+          <a class="btn btn-info btn-sm ml-2" href="{% url 'profile' %}">Back to Profile</a>
+        </p>
+        <p>Need to any help?
+          <a class="btn btn-secondary btn-sm  ml-2" href="{% url 'signin' %}">Help Center</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %} {% include 'partials/_footer.html' %} {% endblock %}
+
+{% block extrascripts %} {% endblock %}

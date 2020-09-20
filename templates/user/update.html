@@ -1,0 +1,148 @@
+{% extends 'base/base.html' %}
+
+{% load static %}
+
+{% block title %} AuthProject : Update Profile {% endblock %}
+
+{% block extrahead %} {% endblock %}
+
+{% block extrastyle %}
+
+{% endblock %}
+
+{% block header %} {% include 'partials/_header.html' %} {% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+
+      <form class="border border-light p-5" id="validation-form" enctype="multipart/form-data" action="" method="POST">
+
+        <p class="h4 mb-4 text-center ">Update Profile</p>
+
+        {% csrf_token %}
+        {% include 'partials/_messages.html' %}
+
+        <div class="row">
+          <div class="col-md-8">
+            <!-- First name -->
+            <div class="col-md-12">
+              <label for="first_name" class="text-muted">First name *</label>
+              <input type="text" name="first_name" class="form-control" placeholder="Your first name" value="{{user.first_name}}">
+            </div>
+
+            <!-- Last name -->
+            <div class="col-md-12">
+              <label for="last_name" class="text-muted  mt-3">Last name *</label>
+              <input type="text" name="last_name" class="form-control" placeholder="Your last name" value="{{user.last_name}}">
+            </div>
+
+            <!-- E-mail -->
+            <div class="col-md-12">
+              <label for="email" class="text-muted  mt-3">E-mail *</label>
+              <input type="email" name="email" class="form-control" placeholder="email@example.com" value="{{user.email}}">
+            </div>
+          </div>
+          <div class="col-md-4 mt-4">
+            <div class="profile-images-card">
+              <div class="profile-images">
+                <img src="{{values.image.url}}" id="upload-img">
+              </div>
+              <div class="custom-file">
+                <label class="btn btn-info" for="fileupload">Upload Profile</label>
+                <input type="file" name="image" value="{{values.image}}" id="fileupload">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Designation -->
+        <div class="col">
+          <label for="designation" class="text-muted  mt-3">Designation *</label>
+          <input type="text" id="designation" name="designation" class="form-control"
+            placeholder="Web designer & developer" value="{{values.designation}}">
+        </div>
+
+        <!-- Birthday -->
+        <div class="col">
+          <label for="birthday" class="text-muted  mt-3">Birthday *</label>
+          <input type="date" id="birthday" name="birthday" class="form-control"
+            value="{{values.birthday|date:'Y-m-d'}}">
+        </div>
+
+        <!-- Biography -->
+        <div class="col">
+          <label for="biography" class="text-muted  mt-3">Biography *</label>
+          <textarea class="form-control" name="biography" id="biography" rows="3" cols="30"
+            placeholder="Tell something about yourself">{{values.biography}}</textarea>
+        </div>
+
+        <!-- Address -->
+        <div class="col">
+          <label for="address" class="text-muted  mt-3">Address *</label>
+          <input type="text" id="address" name="address" class="form-control" placeholder="1234/A Main St. UK" value="{{values.address}}">
+        </div>
+
+        <!-- Phone -->
+        <div class="col">
+          <label for="phone" class="text-muted  mt-3">Phone *</label>
+          <input type="text" id="phone" name="phone" class="form-control" placeholder="+880 172xxxxxxx" value="{{values.phone}}">
+        </div>
+
+        <!-- Website Url -->
+        <div class="col">
+          <label for="website_url" class="text-muted  mt-3">Website Url *</label>
+          <input type="url" id="website_url" name="website_url" class="form-control"
+            placeholder="https://mywebsite.com/" value="{{values.website_url}}">
+        </div>
+
+        <!-- Facebook Url -->
+        <div class="col">
+          <label for="facebook_url" class="text-muted  mt-3">Facebook Url *</label>
+          <input type="url" id="facebook_url" name="facebook_url" class="form-control"
+            placeholder="https://www.facebook.com/" value="{{values.facebook_url}}">
+        </div>
+
+        <!-- Twitter Url -->
+        <div class="col">
+          <label for="twitter_url" class="text-muted  mt-3">Twitter Url *</label>
+          <input type="url" id="twitter_url" name="twitter_url" class="form-control"
+            placeholder="https://twitter.com/" value="{{values.twitter_url}}">
+        </div>
+        
+        <!-- Instagram Url -->
+        <div class="col">
+          <label for="instagram_url" class="text-muted  mt-3">Instagram Url *</label>
+          <input type="url" id="instagram_url" name="instagram_url" class="form-control"
+            placeholder="https://www.instagram.com/" value="{{values.instagram_url}}">
+        </div>
+
+        <!-- Github Url -->
+        <div class="col">
+          <label for="github_url" class="text-muted  mt-3">Github Url *</label>
+          <input type="url" id="github_url" name="github_url" class="form-control"
+            placeholder="https://github.com/" value="{{values.github_url}}">
+        </div>
+
+        <!-- Update Profile button -->
+        <div class="col-md-12">
+          <button class="btn btn-info my-4 btn-block" name="update" type="submit">
+            Upate Profile
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %} {% include 'partials/_footer.html' %} {% endblock %}
+
+{% block extrascripts %}
+
+
+{% endblock %}

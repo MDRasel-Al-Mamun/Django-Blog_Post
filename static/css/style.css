@@ -1,0 +1,169 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding-top: 30px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.header-navbar nav {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+#validation-form .progress {
+  width: 100%;
+  height: 5px;
+  margin-top: 1rem;
+  border-radius: 0;
+  margin-bottom: 0.25rem;
+}
+#validation-form .password-score {
+  font-size: 14px;
+  font-weight: 700;
+}
+#validation-form .password-score span {
+  font-size: 18px;
+}
+#validation-form .password-recommendation {
+  font-size: 13px;
+}
+#validation-form .password-recommendation ul,
+#validation-form .password-recommendation ol {
+  padding-left: 0;
+  list-style: none;
+  text-decoration: none;
+}
+#validation-form #password-recommendation-heading {
+  font-weight: 500;
+  color: #0b0757;
+  font-size: 14px;
+  margin-bottom: 0.25rem;
+}
+
+.profile-images-card {
+  margin: auto;
+  display: table;
+}
+
+.profile-images {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-images img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.custom-file input[type='file'] {
+  display: none;
+}
+
+.custom-file label {
+  cursor: pointer;
+  text-align: center;
+  display: table;
+  margin: auto;
+  margin-top: 10px;
+}
+.list-group-item {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.list-group-item:hover {
+  background-color: #f4f4ff;
+}
+
+.list-group-item.active {
+  background-color: #f4f4ff;
+  color: black;
+}
+.card .img-box {
+  position: relative;
+  overflow: hidden;
+}
+
+.card .img-box img {
+  width: 100%;
+  transition: transform 2s;
+}
+
+.card .img-box:hover img {
+  transform: scale(1.2);
+}
+ul,
+li {
+  list-style: none;
+}
+
+h5 {
+  margin: 0;
+}
+
+.sidebar-thumb {
+  float: left;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.sidebar-thumb img {
+  background: #fff;
+  border: 1px dashed #e0e0e0;
+  padding: 6px;
+  height: 75px;
+  width: 75px;
+
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.sidebar-content h5 {
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 24px;
+}
+
+.sidebar-content h5 a:hover {
+  color: #2996bd;
+}
+
+.sidebar-content h5 a {
+  color: #202020;
+  outline: 0 none;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.sidebar-meta {
+  margin-top: 10px;
+}
+
+.sidebar-meta span {
+  color: #2e2e2e;
+}
+
+.sidebar-meta span.time {
+  margin-right: 10px;
+}
+
+.sidebar-meta span i {
+  color: #2996bd;
+}
