@@ -2,7 +2,7 @@
 
 {% load post_sidebar %}
 
-<div class="col-md-4 mt-5">
+<div class="col-sm-12 col-md-12 col-lg-4 mt-5">
 
   <!-- Search Widget -->
   <div class="card my-4">
@@ -72,7 +72,7 @@
       <div class="row">
         {% tag_sidebar as common_tags %}
         {% for common_tag in common_tags %}
-        <div class="col-lg-4">
+        <div class="col-4 col-lg-4">
           <a href="{% url 'tagged' common_tag.slug %}" class="badge badge-info">{{ common_tag }}</a>
         </div>
         {% endfor %}

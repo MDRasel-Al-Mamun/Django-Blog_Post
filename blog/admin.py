@@ -42,3 +42,5 @@ class ImagesAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Images, ImagesAdmin)
+
+admin.site.register(Vote)

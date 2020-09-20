@@ -58,14 +58,16 @@
    </div>
    {% endfor %}
    {% else %}
-   <h4>There Are No Posts</h4>
+   <h4 class="text text-uppercase lead">There Are No Posts</h4>
    {% endif %}
-   <div class="row mx-auto">
-    <div class="col-md-12">
-     <a href="{% url 'blog' %}" class="btn btn-outline-info align-center">Show All Posts &rarr;</a>
-    </div>
+  </div>
+  {% if posts %}
+  <div class="row mx-auto">
+   <div class="col-md-12 text-center">
+    <a href="{% url 'blog' %}" class="btn btn-outline-info">Show All Posts &rarr;</a>
    </div>
   </div>
+  {% endif %}
  </div>
 </section>
 

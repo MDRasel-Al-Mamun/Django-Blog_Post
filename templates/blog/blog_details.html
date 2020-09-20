@@ -6,9 +6,7 @@
 
 {% block extrahead %} {% endblock %}
 
-{% block extrastyle %}
-
-{% endblock %}
+{% block extrastyle %} {% endblock %}
 
 {% block header %} {% include 'partials/_header.html' %} {% endblock %}
 
@@ -20,7 +18,7 @@
   <div class="row">
 
     <!-- Post Content Column -->
-    <div class="col-lg-8">
+    <div class="col-md-12 col-lg-8">
 
       <!-- Title -->
       <h1 class="mb-5">{{ post.title }}</h1>
@@ -31,10 +29,10 @@
         <!--Indicators-->
         <ol class="carousel-indicators">
           {% if images %}
-            {% for pic in images %}
-            <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}"
-              class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
-            {% endfor %}
+          {% for pic in images %}
+          <li data-target="#carousel-example-1z" data-slide-to="{{ forloop.counter0 }}"
+            class="{% if forloop.counter0 == 0 %} active {% endif %}"></li>
+          {% endfor %}
           {% endif %}
         </ol>
         <!--/.Indicators-->
@@ -44,13 +42,13 @@
 
           <!-- slide-->
           {% if images %}
-            {% for pic in images %}
-            <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
-              <img class="d-block w-100" src="{{ pic.image.url }}" alt="First slide">
-            </div>
-            {% endfor %}
-            {% else %}
-            <img src="{{ post.thumbnail.url }}" class="img-fluid rounded" width="100%" height="500px" alt="">
+          {% for pic in images %}
+          <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+            <img class="d-block w-100" src="{{ pic.image.url }}" alt="First slide">
+          </div>
+          {% endfor %}
+          {% else %}
+          <img src="{{ post.thumbnail.url }}" class="img-fluid rounded" width="100%" height="500px" alt="">
           {% endif %}
           <!--slide-->
 
@@ -73,57 +71,95 @@
 
       <hr>
       <!-- Author & Feature -->
-      <div class="">
-        <span class="">
-          <a href="" class="pr-1">
+
+      <div class="d-flex bd-highlight mb-3">
+        <div class="py-2 bd-highlight">
+          <a href="" class="">
             <img src="{{ post.author.userprofile.image.url }}" height="30px" width="30px" class="rounded-circle" alt="">
           </a>
+        </div>
+        <div class="align-self-center p-2 bd-highlight">
           <span>{{ post.full_name }}</span>
-          <span class="px-1"> | </span>
+        </div>
+        <div class="align-self-center bd-highlight">
+          <span class="text-danger">|</span>
+        </div>
+        <div class="align-self-center p-2 bd-highlight">
           <span href="" class=""> {{ post.publish_date }} </span>
-          <span class="px-1"> | </span>
-          <span class="text-success text-uppercase">{{ post.category.name }}</span>
-        </span>
-        <span class="float-right">
+        </div>
+        <div class="align-self-center bd-highlight">
+          <span class="text-danger">|</span>
+        </div>
+        <div class="align-self-center p-2 bd-highlight">
+          <span class="badge badge-success p-2 text-white text-uppercase">{{ post.category.name }}</span>
+        </div>
+      </div>
 
-          {% if request.user.is_authenticated %}
-          <span class="text-warning" id="like_count">{{post.like_count}}</span>
-          <span class="px-2">
-            <button class="btn btn-link p-0 m-0 border-0 btn-outline-light" id="like-button" value="{{post.id}}">
-              <i class="fad fa-heart fa-lg"></i>
-            </button>
-          </span>
-          {% if favourite %}
-          <span class="px-2">
-            <a class="" href="{% url 'favourite' post.id %}">
-              <i class="fad fa-bookmark fa-lg"></i>
-              <span class="text-muted">Remove</span>
-            </a>
-          </span>
-          {% else %}
-          <span class="px-2">
-            <a class="" href="{% url 'favourite' post.id %}">
-              <i class="fal fa-bookmark fa-lg"></i>
-            </a>
-          </span>
-          {% endif %}
-
-          {% else %}
-          <span class="" id="like_count">{{post.like_count}}</span>
-          <span class="px-2">
-            <a class="" href="{% url 'signin' %}" value="{{post.id}}">
-              <i class="fad fa-heart fa-lg"></i>
-            </a>
-          </span>
-          <span class="px-2">
-            <a class="" href="{% url 'signin' %}">
-              <i class="fal fa-bookmark fa-lg"></i>
-            </a>
-          </span>
-          {% endif %}
+      <hr>
 
 
-        </span>
+      <div class="d-flex bd-highlight mb-3">
+        <span id="thumbs" data-value="{{post.id}}"></span>
+        <div class="bd-highlight">
+          <a {% if request.user.is_authenticated %} class="text-success thumbaction" {% else %}
+            href="{% url 'signin' %}" class="text-success" {% endif %} value="thumbsup" data-toggle="tooltip"
+            title="Like" role="button">
+            <i class="far fa-thumbs-up fa-2x"></i>
+          </a>
+        </div>
+        <div class="align-self-start bd-highlight">
+          <div class="badge badge-info text-white" id="up">{{post.thumbsup}}</div>
+        </div>
+
+        <div class="bd-highlight pl-4">
+          <a {% if request.user.is_authenticated %} class="text-warning thumbaction" {% else %}
+            href="{% url 'signin' %}" class="text-warning" {% endif %} value="thumbsdown" data-toggle="tooltip"
+            title="Unlike" role="button">
+            <i class="far fa-thumbs-down fa-2x"></i>
+          </a>
+        </div>
+        <div class="align-self-start bd-highlight">
+          <span class="badge badge-info text-white ml-1" id="down">{{post.thumbsdown}}</span>
+        </div>
+
+        {% if request.user.is_authenticated %}
+        <div class="bd-highlight pl-4">
+          <button class="btn btn-link p-0 m-0 border-0 text-danger" id="like-button" title="Love" value="{{post.id}}">
+            <i class="far fa-heart fa-2x"></i>
+          </button>
+        </div>
+        <div class="align-self-start bd-highlight">
+          <span class="badge badge-info text-white ml-1" id="like_count">{{post.like_count}}</span>
+        </div>
+        {% if favourite %}
+        <div class="bd-highlight pl-4">
+          <a class="text-secondary" href="{% url 'favourite' post.id %}" title="Remove">
+            <i class="fad fa-bookmark fa-2x"></i>
+          </a>
+        </div>
+        {% else %}
+        <div class="bd-highlight pl-4">
+          <a class="text-secondary" href="{% url 'favourite' post.id %}" title="Bookmark">
+            <i class="far fa-bookmark fa-2x"></i>
+          </a>
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="bd-highlight pl-4">
+          <a class="text-danger" href="{% url 'signin' %}" value="{{post.id}}" title="Love">
+            <i class="fad fa-heart fa-2x"></i>
+          </a>
+        </div>
+        <div class="align-self-start bd-highlight">
+          <span class="badge badge-info text-white ml-1" id="like_count">{{post.like_count}}</span>
+        </div>
+
+        <div class="bd-highlight pl-4">
+          <a class="text-secondary" href="{% url 'signin' %}" title="Bookmark">
+            <i class="far fa-bookmark fa-2x"></i>
+          </a>
+        </div>
+        {% endif %}
       </div>
 
       <hr>
@@ -159,6 +195,32 @@
 
 {% block extrascripts %}
 <script>
+  // Thumbs Up & Thumbs Down
+
+  $(document).ready(function () {
+    $('.thumbaction').click(function (e) {
+      e.preventDefault();
+      var postid = document.getElementById('thumbs').getAttribute('data-value');
+      var button = $(this).attr('value');
+      $.ajax({
+        type: 'POST',
+        url: '{% url "thumbs" %}',
+        data: {
+          postid: postid,
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+          action: 'thumbs',
+          button: button,
+        },
+        success: function (json) {
+          document.getElementById('up').innerHTML = json['up'];
+          document.getElementById('down').innerHTML = json['down'];
+        },
+        error: function (xhr, errmsg, err) {},
+      });
+    });
+  });
+
+// Love like button
   $(document).on('click', '#like-button', function (e) {
     e.preventDefault();
     $.ajax({
@@ -178,5 +240,6 @@
     });
   })
 </script>
+
 
 {% endblock %}

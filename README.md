@@ -16,7 +16,7 @@ To Create a Full Blog for Django Website
 
 > - <a href="#details">7. Sidebar With Django Custom Template Tags </a>
 
-> - <a href="#feature">8. Blog Post Add Like & Bookmark Feature </a>
+> - <a href="#feature">8. Blog Post Feature (Like, Unlike, Love, Bookmark) </a>
 
 > - <a href="#search">9. Search Posts With AJAX Dropdowm Suggestion  </a>
 
@@ -264,49 +264,54 @@ def homeView(request):
 
 ```html
 {% if posts %}
-{% for post in posts %}
-<div class="col-sm-6 col-md-6 col-lg-4">
+   {% for post in posts %}
+   <div class="col-sm-6 col-md-6 col-lg-4">
     <div class="card mb-4">
-        <div class="img-box">
-            <img class="card-img-top" src="{{ post.thumbnail.url }}" width="100%" height="250px" alt="Card image cap">
-        </div>
-        <div class="card-body">
-            <span class="text text-warning text-uppercase">{{ post.category.name }}</span>
-            <a class="text-decoration-none text-dark" href="{{ post.get_absolute_url }}">
-                <h4 class="card-title text-capitalize">
-                    {{ post.title|truncatewords:6 }}
-                </h4>
-            </a>
-            <p class="card-text text-justify">{{ post.overview|truncatewords:12 }}</p>
-            <a href="{{ post.get_absolute_url }}" class="btn btn-secondary">Read More &rarr;</a>
-        </div>
-        <div class="card-footer text-muted">
-            <div class="">
-                <span class="post-auhor-date">
-                    <span>
-                        <a href="" class="pr-1">
-                            <img src="{{ post.author.userprofile.image.url }}" height="30px" width="30px" class="rounded-circle" alt="">
-                        </a>
-                    </span>
-                    <span href="" class=""> {{ post.publish_date }}</span>
-                </span>
-                <span class="px-1"> | </span>
-                <span class="post-readtime">
-                    <i class="fal fa-clock"></i>1 min <span>read</span>
-                </span>
-            </div>
-        </div>
+     <div class="img-box">
+      <img class="card-img-top" src="{{ post.thumbnail.url }}" width="100%" height="250px" alt="Card image cap">
+     </div>
+     <div class="card-body">
+      <span class="text text-warning text-uppercase">{{ post.category.name }}</span>
+      <a class="text-decoration-none text-dark" href="{{ post.get_absolute_url }}">
+       <h4 class="card-title text-capitalize">
+        {{ post.title|truncatewords:6 }}
+       </h4>
+      </a>
+      <p class="card-text text-justify">{{ post.overview|truncatewords:12 }}</p>
+      <a href="{{ post.get_absolute_url }}" class="btn btn-secondary">Read More &rarr;</a>
+     </div>
+     <div class="card-footer text-muted">
+      <div class="">
+       <span class="post-auhor-date">
+        <span>
+         <a href="" class="pr-1">
+          <img src="{{ post.author.userprofile.image.url }}" height="30px" width="30px" class="rounded-circle" alt="">
+         </a>
+        </span>
+        <span href="" class=""> {{ post.publish_date }}</span>
+       </span>
+       <span class="px-1"> | </span>
+       <span class="post-readtime">
+        <i class="fal fa-clock"></i>
+        1 min <span>read</span>
+       </span>
+      </div>
+     </div>
     </div>
-</div>
-{% endfor %}
-{% else %}
-    <h4>There Are No Posts</h4>
-{% endif %}
-<div class="row mx-auto">
-    <div class="col-md-12">
-        <a href="{% url 'blog' %}" class="btn btn-outline-info align-center">Show All Posts &rarr;</a>
-    </div>
-</div>
+
+   </div>
+   {% endfor %}
+   {% else %}
+   <h4 class="text text-uppercase lead">There Are No Posts</h4>
+   {% endif %}
+  </div>
+  {% if posts %}
+  <div class="row mx-auto">
+   <div class="col-md-12 text-center">
+    <a href="{% url 'blog' %}" class="btn btn-outline-info">Show All Posts &rarr;</a>
+   </div>
+  </div>
+  {% endif %}
 ```
 
 ## 4. Show All Blog Posts With Pagination <a href="" name="post"> - </a>
@@ -393,48 +398,52 @@ urlpatterns = [
                 <span class="post-auhor-date">
                     <span>
                         <a href="" class="pr-1">
-                            <img src="{{ post.author.userprofile.image.url }}" height="30px" width="30px" class="rounded-circle" alt="">
+                        <img src="{{ post.author.userprofile.image.url }}" height="30px" width="30px" class="rounded-circle"
+                            alt="">
                         </a>
                     </span>
                     <span href="" class=""> {{ post.publish_date }} </span>
                 </span>
                 <span class="px-1"> | </span>
                 <span class="post-readtime">
-                    <i class="fal fa-clock"></i> 1 min <span>read</span>
+                    <i class="fal fa-clock"></i>1 min <span>read</span>
                 </span>
             </div>
         </div>
     </div>
     {% endfor %}
-{% else %}
-    <h3>No Posts are Published</h3>
-{% endif %}
 
 
 <!-- Pagination -->
-<nav class="" aria-label="...">
-    <ul class="pagination justify-content-center mb-4">
-        <li class="page-item {% if not prev_page_url %} disabled {% endif %}">
-            <a class="page-link" href="{{ prev_page_url }}" tabindex="-1">Previous</a>
-        </li>
-        {% for n in page.paginator.page_range %}
+    <nav class="" aria-label="...">
+        <ul class="pagination justify-content-center mb-4">
+            <li class="page-item {% if not prev_page_url %} disabled {% endif %}">
+                <a class="page-link" href="{{ prev_page_url }}" tabindex="-1">Previous</a>
+            </li>
+            {% for n in page.paginator.page_range %}
             {% if page.number == n %}
-                <li class="page-item active">
-                    <a class="page-link" href="?page={{ n }}">{{ n }}
+            <li class="page-item active">
+                <a class="page-link" href="?page={{ n }}">{{ n }}
                     <span class="sr-only">(current)</span>
-                    </a>
-                </li>
+                </a>
+            </li>
             {% elif n > page.number|add:-3 and n < page.number|add:3 %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ n }}">{{ n }}</a>
-                </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+            </li>
             {% endif %}
-        {% endfor %}
-        <li class="page-item {% if not next_page_url %} disabled {% endif %}">
-            <a class="page-link" href="{{ next_page_url }}">Next</a>
-        </li>
-    </ul>
-</nav>
+            {% endfor %}
+            <li class="page-item {% if not next_page_url %} disabled {% endif %}">
+                <a class="page-link" href="{{ next_page_url }}">Next</a>
+            </li>
+        </ul>
+    </nav>
+
+{% else %}
+
+    <h4 class="text text-uppercase lead">No Posts are Published</h4>
+
+{% endif %}
 ```
 
 1. Add blog page link in navbaer - `<a href="{% url 'blog' %}" class="nav-item nav-link">Blog</a>`
@@ -618,31 +627,28 @@ urlpatterns = [
 
     <hr>
     <!-- Author -->
-    <div class="">
-        <span class="">
-            <a href="" class="pr-1">
-                <img src="{{ post.author.userprofile.image.url }}" height="30px" width="30px" class="rounded-circle" alt="">
-            </a>
-            <span>{{ post.full_name }}</span>
-            <span class="px-1"> | </span>
-            <span href="" class=""> {{ post.publish_date }} </span>
-            <span class="px-1"> | </span>
-            <span class="text-success text-uppercase">{{ post.category.name }}</span>
-        </span>
-        <span class="float-right">
-            <span class="" id="like_count">1</span>
-            <span class="px-2">
-                <a class="" href="" value="">
-                <i class="fad fa-heart fa-lg"></i>
-                </a>
-            </span>
-            <span class="px-2">
-                <a class="" href="">
-                <i class="fal fa-bookmark fa-lg"></i>
-                </a>
-            </span>
-        </span>
-    </div>
+    <div class="d-flex bd-highlight mb-3">
+        <div class="py-2 bd-highlight">
+          <a href="" class="">
+            <img src="{{ post.author.userprofile.image.url }}" height="30px" width="30px" class="rounded-circle" alt="">
+          </a>
+        </div>
+        <div class="align-self-center p-2 bd-highlight">
+          <span>{{ post.full_name }}</span>
+        </div>
+        <div class="align-self-center bd-highlight">
+          <span class="text-danger">|</span>
+        </div>
+        <div class="align-self-center p-2 bd-highlight">
+          <span href="" class=""> {{ post.publish_date }} </span>
+        </div>
+        <div class="align-self-center bd-highlight">
+          <span class="text-danger">|</span>
+        </div>
+        <div class="align-self-center p-2 bd-highlight">
+          <span class="badge badge-success p-2 text-white text-uppercase">{{ post.category.name }}</span>
+        </div>
+      </div>
     <hr>
 
     <!-- Post Content -->
@@ -739,7 +745,7 @@ def tag_sidebar(count=9):
 1. Include sidebar template on blog.html & blog_details.html - `{% include 'blog/sidebar.html' %}`
 
 
-## 8. Blog Post Add Like & Bookmark Feature  <a href="" name="feature"> - </a>
+## 8. Blog Post Feature (Like, Unlike, Love, Bookmark)  <a href="" name="feature"> - </a>
 
 1. Create file - templates > user > `bookmark.html`
 
@@ -750,9 +756,19 @@ class Post(models.Model):
     favourites = models.ManyToManyField(User, related_name='favourite', default=None, blank=True)
     likes = models.ManyToManyField(User, related_name='like', default=None, blank=True)
     like_count = models.BigIntegerField(default='0')
-```
+    thumbsup = models.IntegerField(default='0')
+    thumbsdown = models.IntegerField(default='0')
+    thumbs = models.ManyToManyField(User, related_name='thumbs', default=None, blank=True)
 
-1. Run - `python manage.py makemigrations` & `python manage.py migrate`
+
+class Vote(models.Model):
+    post = models.ForeignKey(Post, related_name='postid', on_delete=models.CASCADE, default=None, blank=True)
+    user = models.ForeignKey(User, related_name='userid', on_delete=models.CASCADE, default=None, blank=True)
+    vote = models.BooleanField(default=True)
+
+```
+1. Register new database > blog > admin.py - `admin.site.register(Vote)`
+2. Run - `python manage.py makemigrations` & `python manage.py migrate`
 
 
 * user > views.py 
@@ -799,6 +815,117 @@ def like(request):
             post.save()
         return JsonResponse({'result': result, })
 
+def thumbs(request):
+
+    if request.POST.get('action') == 'thumbs':
+
+        id = int(request.POST.get('postid'))
+        button = request.POST.get('button')
+        update = Post.objects.get(id=id)
+
+        if update.thumbs.filter(id=request.user.id).exists():
+
+            # Get the users current vote (True/False)
+            q = Vote.objects.get(
+                Q(post_id=id) & Q(user_id=request.user.id))
+            evote = q.vote
+
+            if evote == True:
+
+                # Now we need action based upon what button pressed
+
+                if button == 'thumbsup':
+
+                    update.thumbsup = F('thumbsup') - 1
+                    update.thumbs.remove(request.user)
+                    update.save()
+                    update.refresh_from_db()
+                    up = update.thumbsup
+                    down = update.thumbsdown
+                    q.delete()
+
+                    return JsonResponse({'up': up, 'down': down, 'remove': 'none'})
+
+                if button == 'thumbsdown':
+
+                    # Change vote in Post
+                    update.thumbsup = F('thumbsup') - 1
+                    update.thumbsdown = F('thumbsdown') + 1
+                    update.save()
+
+                    # Update Vote
+
+                    q.vote = False
+                    q.save(update_fields=['vote'])
+
+                    # Return updated votes
+                    update.refresh_from_db()
+                    up = update.thumbsup
+                    down = update.thumbsdown
+
+                    return JsonResponse({'up': up, 'down': down})
+
+            pass
+
+            if evote == False:
+
+                if button == 'thumbsup':
+
+                    # Change vote in Post
+                    update.thumbsup = F('thumbsup') + 1
+                    update.thumbsdown = F('thumbsdown') - 1
+                    update.save()
+
+                    # Update Vote
+
+                    q.vote = True
+                    q.save(update_fields=['vote'])
+
+                    # Return updated votes
+                    update.refresh_from_db()
+                    up = update.thumbsup
+                    down = update.thumbsdown
+
+                    return JsonResponse({'up': up, 'down': down})
+
+                if button == 'thumbsdown':
+
+                    update.thumbsdown = F('thumbsdown') - 1
+                    update.thumbs.remove(request.user)
+                    update.save()
+                    update.refresh_from_db()
+                    up = update.thumbsup
+                    down = update.thumbsdown
+                    q.delete()
+
+                    return JsonResponse({'up': up, 'down': down, 'remove': 'none'})
+
+        else:
+            # New selection
+            if button == 'thumbsup':
+                update.thumbsup = F('thumbsup') + 1
+                update.thumbs.add(request.user)
+                update.save()
+                # Add new vote
+                new = Vote(post_id=id, user_id=request.user.id, vote=True)
+                new.save()
+            else:
+                # Add vote down
+                update.thumbsdown = F('thumbsdown') + 1
+                update.thumbs.add(request.user)
+                update.save()
+                # Add new vote
+                new = Vote(post_id=id, user_id=request.user.id, vote=False)
+                new.save()
+
+            # Return updated votes
+            update.refresh_from_db()
+            up = update.thumbsup
+            down = update.thumbsdown
+
+            return JsonResponse({'up': up, 'down': down})
+
+    pass
 
 ```
 
@@ -809,6 +936,7 @@ urlpatterns = [
     path('favourite/<int:id>/', views.favourite, name='favourite'),
     path('profile/favourite/', views.favourite_list, name='favourite_list'),
     path('like/', views.like, name='like'),
+    path('thumbs/', views.thumbs, name='thumbs'),
 ]
 
 ```
@@ -878,47 +1006,98 @@ def blogDetails(request, id, slug):
 
 ```html
 <!-- Author & Feature -->
-<span class="float-right">
+
+<div class="d-flex bd-highlight mb-3">
+    <span id="thumbs" data-value="{{post.id}}"></span>
+    <div class="bd-highlight">
+        <a {% if request.user.is_authenticated %} class="text-success thumbaction" {% else %}
+        href="{% url 'signin' %}" class="text-success" {% endif %} value="thumbsup" data-toggle="tooltip"
+        title="Like" role="button">
+            <i class="far fa-thumbs-up fa-2x"></i>
+        </a>
+    </div>
+    <div class="align-self-start bd-highlight">
+        <div class="badge badge-info text-white" id="up">{{post.thumbsup}}</div>
+    </div>
+
+    <div class="bd-highlight pl-4">
+        <a {% if request.user.is_authenticated %} class="text-warning thumbaction" {% else %}
+        href="{% url 'signin' %}" class="text-warning" {% endif %} value="thumbsdown" data-toggle="tooltip" title="Unlike" role="button">
+            <i class="far fa-thumbs-down fa-2x"></i>
+        </a>
+    </div>
+    <div class="align-self-start bd-highlight">
+        <span class="badge badge-info text-white ml-1" id="down">{{post.thumbsdown}}</span>
+    </div>
 
     {% if request.user.is_authenticated %}
-        <span class="text-warning" id="like_count">{{post.like_count}}</span>
-        <span class="px-2">
-            <button class="btn btn-link p-0 m-0 border-0 btn-outline-light" id="like-button" value="{{post.id}}">
-                <i class="fad fa-heart fa-lg"></i>
-            </button>
-        </span>
-        {% if favourite %}
-            <span class="px-2">
-                <a class="" href="{% url 'favourite' post.id %}">
-                    <i class="fad fa-bookmark fa-lg"></i>
-                    <span class="text-muted">Remove</span>
-                </a>
-            </span>
-        {% else %}
-            <span class="px-2">
-                <a class="" href="{% url 'favourite' post.id %}">
-                    <i class="fal fa-bookmark fa-lg"></i>
-                </a>
-            </span>
-        {% endif %}
-
+    <div class="bd-highlight pl-4">
+        <button class="btn btn-link p-0 m-0 border-0 text-danger" id="like-button" title="Love" value="{{post.id}}">
+            <i class="far fa-heart fa-2x"></i>
+        </button>
+    </div>
+    <div class="align-self-start bd-highlight">
+        <span class="badge badge-info text-white ml-1" id="like_count">{{post.like_count}}</span>
+    </div>
+    {% if favourite %}
+    <div class="bd-highlight pl-4">
+        <a class="text-secondary" href="{% url 'favourite' post.id %}" title="Remove">
+            <i class="fad fa-bookmark fa-2x"></i>
+        </a>
+    </div>
     {% else %}
-        <span class="" id="like_count">{{post.like_count}}</span>
-        <span class="px-2">
-            <a class="" href="{% url 'signin' %}" value="{{post.id}}">
-                <i class="fad fa-heart fa-lg"></i>
-            </a>
-        </span>
-        <span class="px-2">
-            <a class="" href="{% url 'signin' %}">
-                <i class="fal fa-bookmark fa-lg"></i>
-            </a>
-        </span>
+    <div class="bd-highlight pl-4">
+        <a class="text-secondary" href="{% url 'favourite' post.id %}" title="Bookmark">
+            <i class="far fa-bookmark fa-2x"></i>
+        </a>
+    </div>
     {% endif %}
-</span>
+    {% else %}
+    <div class="bd-highlight pl-4">
+        <a class="text-danger" href="{% url 'signin' %}" value="{{post.id}}" title="Love">
+        <i class="fad fa-heart fa-2x"></i>
+        </a>
+    </div>
+    <div class="align-self-start bd-highlight">
+        <span class="badge badge-info text-white ml-1" id="like_count">{{post.like_count}}</span>
+    </div>
+
+    <div class="bd-highlight pl-4">
+        <a class="text-secondary" href="{% url 'signin' %}" title="Bookmark">
+            <i class="far fa-bookmark fa-2x"></i>
+        </a>
+    </div>
+    {% endif %}
+</div>
 
 <!-- Add Javascript -->
 <script>
+  // Thumbs Up & Thumbs Down
+
+  $(document).ready(function () {
+    $('.thumbaction').click(function (e) {
+      e.preventDefault();
+      var postid = document.getElementById('thumbs').getAttribute('data-value');
+      var button = $(this).attr('value');
+      $.ajax({
+        type: 'POST',
+        url: '{% url "thumbs" %}',
+        data: {
+          postid: postid,
+          csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+          action: 'thumbs',
+          button: button,
+        },
+        success: function (json) {
+          document.getElementById('up').innerHTML = json['up'];
+          document.getElementById('down').innerHTML = json['down'];
+        },
+        error: function (xhr, errmsg, err) {},
+      });
+    });
+  });
+
+// Love like button
   $(document).on('click', '#like-button', function (e) {
     e.preventDefault();
     $.ajax({
